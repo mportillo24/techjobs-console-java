@@ -10,6 +10,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by LaunchCode
@@ -62,7 +63,7 @@ public class JobData {
      * with "Enterprise Holdings, Inc".
      *
      * @param column   Column that should be searched.
-     * @param value Value of teh field to search for
+     * @param value Value of the field to search for
      * @return List of all jobs matching the criteria
      */
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
@@ -81,6 +82,28 @@ public class JobData {
             }
         }
 
+        return jobs;
+    }
+
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+        loadData();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        String aValue = "";
+
+        for (HashMap<String, String> job : allJobs) {
+            for (Map.Entry<String, String> selectedJob : job.entrySet()) {
+                //Sets up value for comparison in order to allow case insensitive search
+                aValue = selectedJob.getValue();
+                if (aValue.equalsIgnoreCase(value)) {
+                    break;
+                }
+            };
+            //Only adds job HashMap to jobs ArrayList if searchTerm value is found and matches the case insenstive aValue variable
+            if ((value.equalsIgnoreCase(aValue))) {
+                jobs.add((job));
+            }
+        }
         return jobs;
     }
 
