@@ -76,10 +76,12 @@ public class JobData {
         for (HashMap<String, String> row : allJobs) {
 
             String aValue = row.get(column);
-
-            if (aValue.equalsIgnoreCase(value)) {
+//
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
+
+
         }
 
         return jobs;
@@ -89,19 +91,13 @@ public class JobData {
         loadData();
 
         ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
-        String aValue = "";
 
         for (HashMap<String, String> job : allJobs) {
-            for (Map.Entry<String, String> selectedJob : job.entrySet()) {
-                //Sets up value for comparison in order to allow case insensitive search
-                aValue = selectedJob.getValue();
-                if (aValue.equalsIgnoreCase(value)) {
-                    break;
+            for(String key : job.keySet()) {
+                String jobValue = job.get(key);
+                if (jobValue.toLowerCase().contains(value.toLowerCase())) {
+                    jobs.add(job);
                 }
-            };
-            //Only adds job HashMap to jobs ArrayList if searchTerm value is found and matches the case insenstive aValue variable
-            if ((value.equalsIgnoreCase(aValue))) {
-                jobs.add((job));
             }
         }
         return jobs;
